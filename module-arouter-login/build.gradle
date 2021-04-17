@@ -1,0 +1,71 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions' // xml id被弃用
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion android_versions.compileSdkVersion
+    buildToolsVersion android_versions.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion android_versions.minSdkVersion
+        targetSdkVersion android_versions.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner android_versions.testInstrumentationRunner
+        consumerProguardFiles "consumer-rules.pro"
+
+        // 给Module（BuildConfig.java）传递参数
+        buildConfigField("boolean", "isRelease", String.valueOf(isRelease))
+
+        // 给注解处理器（APT）传递参数
+        javaCompileOptions {
+            annotationProcessorOptions {
+                // 给注解器
+                arguments = [
+                        "modelName"        : project.getName(),
+                        "aptPackageName": PACKAGE_NAME_FOR_APT
+                ]
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    android_dependencies.each {
+        k, v ->
+            println("-$v")
+            implementation v
+    }
+    test_dependencies.each {
+        k, v ->
+            println("-$v")
+            testImplementation v
+    }
+    android_test_dependencies.each {
+        k, v ->
+            println("-$v")
+            androidTestImplementation v
+    }
+
+    implementation project(":lib-xrouter-api")
+    kapt project(":lib-xrouter-annotations-compiler")
+}

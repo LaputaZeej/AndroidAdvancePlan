@@ -1,2 +1,11 @@
+include ':lib-xrouter-api'
+include ':lib-xrouter-annotations-compiler'
+include ':lib-xrouter-annotations'
+include ':module-xrouter-login'
+include ':module-xrouter-home'
+include ':app-xrouter'
+include ':module-arouter-home'
+include ':module-arouter-login'
+include ':app-arouter'
 include ':app'
 rootProject.name = "AndroidAdvancePlan"
