@@ -1,6 +1,7 @@
 package com.laputa.xrouter.annotations.compiler;
 
 import com.google.auto.service.AutoService;
+import com.laputa.xrouter.annotations.Constant;
 import com.laputa.xrouter.annotations.RouterBean;
 import com.laputa.xrouter.annotations.XRoute;
 import com.squareup.javapoet.ClassName;
@@ -34,9 +35,6 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
-import static com.laputa.xrouter.annotations.compiler.Constant.MODULE_NAME_FOR_APT;
-import static com.laputa.xrouter.annotations.compiler.Constant.PACKAGE_NAME_FOR_APT;
-
 /**
  * Author by xpl, Date on 2021/4/17.
  */
@@ -66,7 +64,7 @@ public class XRouteCompiler extends AbstractProcessor {
         elementUtils = processingEnv.getElementUtils();
         typeUtils = processingEnv.getTypeUtils();
         //displayOptions();
-        moduleName = processingEnv.getOptions().get(MODULE_NAME_FOR_APT);
+        moduleName = processingEnv.getOptions().get(Constant.MODULE_NAME_FOR_APT);
         packageNameForAPT = processingEnv.getOptions().get(Constant.PACKAGE_NAME_FOR_APT);
         println("-> moduleName = " + moduleName + " , " + "packageNameForAPT = " + packageNameForAPT);
     }
@@ -217,24 +215,25 @@ public class XRouteCompiler extends AbstractProcessor {
                         WildcardTypeName.subtypeOf(ClassName.get(routerPathTypeElement)) // ? extends RouterPath
                 ) // Class<?  extends RouterPath
         );
-        // method
-        MethodSpec.Builder methodSpecBuilder = MethodSpec.methodBuilder(Constant.INTERFACE_METHOD_ROUTER_GROUP)
-                .addAnnotation(Override.class)
-                .addModifiers(Modifier.PUBLIC)
-                .returns(returnType);
+
         final String groupMapVar = "groupMap";
-        // Map<String,Class<? extends RouterPath> map = new HashMap<>();
-        methodSpecBuilder.addStatement(
-                "$T<$T,$T> $N = new $T<>()",
-                ClassName.get(Map.class),
-                ClassName.get(String.class),
-                ParameterizedTypeName.get(ClassName.get(Class.class), WildcardTypeName.subtypeOf(ClassName.get(routerPathTypeElement))),
-                groupMapVar,
-                ClassName.get(HashMap.class)
-        );
         // 一个group对应一个RouterGroup.class
         //map.put(key,value);
         for (Map.Entry<String, String> entry : groupMap.entrySet()) {
+            // method
+            MethodSpec.Builder methodSpecBuilder = MethodSpec.methodBuilder(Constant.INTERFACE_METHOD_ROUTER_GROUP)
+                    .addAnnotation(Override.class)
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(returnType);
+            // Map<String,Class<? extends RouterPath> map = new HashMap<>();
+            methodSpecBuilder.addStatement(
+                    "$T<$T,$T> $N = new $T<>()",
+                    ClassName.get(Map.class),
+                    ClassName.get(String.class),
+                    ParameterizedTypeName.get(ClassName.get(Class.class), WildcardTypeName.subtypeOf(ClassName.get(routerPathTypeElement))),
+                    groupMapVar,
+                    ClassName.get(HashMap.class)
+            );
             methodSpecBuilder.addStatement(
                     "$N.put($S,$T.class)",
                     groupMapVar,
@@ -286,8 +285,8 @@ public class XRouteCompiler extends AbstractProcessor {
     @Override
     public Set<String> getSupportedOptions() {
         Set<String> set = new HashSet<>();
-        set.add(MODULE_NAME_FOR_APT);
-        set.add(PACKAGE_NAME_FOR_APT);
+        set.add(Constant.MODULE_NAME_FOR_APT);
+        set.add(Constant.PACKAGE_NAME_FOR_APT);
         return set;
     }
 

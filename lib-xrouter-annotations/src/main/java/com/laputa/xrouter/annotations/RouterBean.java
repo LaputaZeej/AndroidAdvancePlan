@@ -50,6 +50,7 @@ public class RouterBean {
     }
 
     public enum Type{
-        ACTIVITY
+        // todo 目前只实现了宿主为Activity
+        ACTIVITY,FRAGMENT,SERVICE
     }
 }

@@ -74,5 +74,6 @@ dependencies {
     implementation project(":module-xrouter-home")
 
     implementation project(":lib-xrouter-api")
+    implementation project(":lib-common")
     kapt project(":lib-xrouter-annotations-compiler")
 }

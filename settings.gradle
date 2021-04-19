@@ -1,3 +1,4 @@
+include ':lib-common'
 include ':lib-xrouter-api'
 include ':lib-xrouter-annotations-compiler'
 include ':lib-xrouter-annotations'

@@ -1,6 +1,7 @@
 package com.laputa.xrouter.annotations.compiler;
 
 import com.google.auto.service.AutoService;
+import com.laputa.xrouter.annotations.Constant;
 import com.laputa.xrouter.annotations.XField;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -35,7 +36,6 @@ import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
 
-import static com.laputa.xrouter.annotations.compiler.Constant.MODULE_NAME_FOR_APT;
 
 /**
  * Author by xpl, Date on 2021/4/17.
@@ -65,7 +65,7 @@ public class XFieldCompiler extends AbstractProcessor {
         elementUtils = processingEnv.getElementUtils();
         typeUtils = processingEnv.getTypeUtils();
         //displayOptions();
-        moduleName = processingEnv.getOptions().get(MODULE_NAME_FOR_APT);
+        moduleName = processingEnv.getOptions().get(Constant.MODULE_NAME_FOR_APT);
         packageNameForAPT = processingEnv.getOptions().get(Constant.PACKAGE_NAME_FOR_APT);
         println("-> moduleName = " + moduleName + " , " + "packageNameForAPT = " + packageNameForAPT);
     }
@@ -162,6 +162,9 @@ public class XFieldCompiler extends AbstractProcessor {
                         // todo 更多情况 比如fragment 接口等 做到自动注入功能
                         if (typeMirror.toString().equalsIgnoreCase("java.lang.String")) {
                             finalString += "getString($S)";
+
+                        } else if (typeUtils.isSubtype(typeMirror, elementUtils.getTypeElement(com.laputa.xrouter.annotations.Constant.ANDROID_PARCELABLE).asType())) {
+                            finalString += "getParcelable($S)";
                         }
                         break;
                 }

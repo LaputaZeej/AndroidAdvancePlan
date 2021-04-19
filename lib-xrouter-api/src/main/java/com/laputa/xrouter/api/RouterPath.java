@@ -2,7 +2,6 @@ package com.laputa.xrouter.api;
 
 import com.laputa.xrouter.annotations.RouterBean;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**

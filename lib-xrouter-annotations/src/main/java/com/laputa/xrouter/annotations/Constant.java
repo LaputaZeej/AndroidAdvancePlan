@@ -1,4 +1,4 @@
-package com.laputa.xrouter.annotations.compiler;
+package com.laputa.xrouter.annotations;
 
 /**
  * Author by xpl, Date on 2021/4/7.
@@ -8,6 +8,7 @@ public class Constant {
     // Android
     public static final String ANDROID_ACTIVITY = "android.app.Activity";
     public static final String ANDROID_BUNDLE = "android.os.Bundle";
+    public static final String ANDROID_PARCELABLE = "android.os.Parcelable";
     // 接口包名、方法名等
     private static final String INTERFACE_PACKAGE_NAME = "com.laputa.xrouter.api";
     public static final String INTERFACE_ROUTER_GROUP_PACKAGE_NAME = INTERFACE_PACKAGE_NAME + ".RouterGroup";
