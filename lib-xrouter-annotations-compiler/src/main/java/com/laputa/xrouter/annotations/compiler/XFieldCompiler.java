@@ -28,6 +28,7 @@ import javax.annotation.processing.SupportedOptions;
 import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeKind;
@@ -84,12 +85,16 @@ public class XFieldCompiler extends AbstractProcessor {
             return false;
         }
         TypeElement activityTypeElement = elementUtils.getTypeElement(Constant.ANDROID_ACTIVITY);
-        // 把属性都放进去，key为注解的类.class(即Activity)值为属性Element List
+        TypeElement provideTypeElement = elementUtils.getTypeElement(Constant.INTERFACE_ROUTER_PROVIDE_PACKAGE_NAME);
+        /* 一、解析属性，key为注解的类.class(即Activity)值为属性Element List */
         for (Element element : elements) {
             // 当前节点的父节点-> Activity
             TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
-            if (!typeUtils.isSubtype(enclosingElement.asType(), activityTypeElement.asType())) {
-                throw new RuntimeException("XField当前只能用在Activity中");
+            if (
+                    !typeUtils.isSubtype(enclosingElement.asType(), activityTypeElement.asType())
+                            && (!typeUtils.isSubtype(enclosingElement.asType(), provideTypeElement.asType()))
+            ) {
+                throw new RuntimeException("注解宿主类型为：" + Constant.ANDROID_ACTIVITY + "、" + Constant.INTERFACE_ROUTER_PROVIDE_PACKAGE_NAME);
             }
             // 把属性都添加进去
             if (fieldMap.containsKey(enclosingElement)) {
@@ -104,12 +109,12 @@ public class XFieldCompiler extends AbstractProcessor {
             return false;
         }
         line("scan annotations end. size = " + fieldMap.size());
-        // 生成RouterField接口实现类
+        /* 二、生成RouterField接口实现类 */
         line("create field ...");
         line("  build method");
         // 参数Object target
         final String targetVar = "target";
-        final String activityVar = "activity";
+            final String activityVar = "activity";
         final String bundleVar = "bundle";
         ParameterSpec target = ParameterSpec.builder(TypeName.OBJECT, targetVar).build();
         for (Map.Entry<TypeElement, List<Element>> entry : fieldMap.entrySet()) {
@@ -163,8 +168,12 @@ public class XFieldCompiler extends AbstractProcessor {
                         if (typeMirror.toString().equalsIgnoreCase("java.lang.String")) {
                             finalString += "getString($S)";
 
-                        } else if (typeUtils.isSubtype(typeMirror, elementUtils.getTypeElement(com.laputa.xrouter.annotations.Constant.ANDROID_PARCELABLE).asType())) {
+                        } else if (typeUtils.isSubtype(typeMirror, elementUtils.getTypeElement(Constant.ANDROID_PARCELABLE).asType())) {
                             finalString += "getParcelable($S)";
+                        }else if(typeUtils.isSubtype(typeMirror, provideTypeElement.asType())){
+                            // provide接口
+//                            Class<? extends ElementKind> provideClass = field.getKind().getClass();
+//                            finalString += "($T)"
                         }
                         break;
                 }

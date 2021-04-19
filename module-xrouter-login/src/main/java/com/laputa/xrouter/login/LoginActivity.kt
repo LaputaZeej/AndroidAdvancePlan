@@ -43,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
                 .with("age", 18)
                 .navigation(this)
         }
-        
+
         btn_02.text = "test"
         btn_02.setOnClickListener {
             XRouter.build("/app/TestActivity")

@@ -14,6 +14,7 @@ public class Constant {
     public static final String INTERFACE_ROUTER_GROUP_PACKAGE_NAME = INTERFACE_PACKAGE_NAME + ".RouterGroup";
     public static final String INTERFACE_ROUTER_PATH_PACKAGE_NAME = INTERFACE_PACKAGE_NAME + ".RouterPath";
     public static final String INTERFACE_ROUTER_FIELD_PACKAGE_NAME = INTERFACE_PACKAGE_NAME + ".RouterField";
+    public static final String INTERFACE_ROUTER_PROVIDE_PACKAGE_NAME = INTERFACE_PACKAGE_NAME + ".Provide";
     public static final String INTERFACE_METHOD_ROUTER_PATH = "getPathMap";
     public static final String INTERFACE_METHOD_ROUTER_GROUP = "getGroupMap";
     public static final String INTERFACE_METHOD_ROUTER_FIELD = "loadField";
