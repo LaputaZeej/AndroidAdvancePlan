@@ -1,3 +1,6 @@
+include ':plugin-task-time'
+include ':plugin-hello-world'
+include ':lib-arouter-service'
 include ':lib-common'
 include ':lib-xrouter-api'
 include ':lib-xrouter-annotations-compiler'

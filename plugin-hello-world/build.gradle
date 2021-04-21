@@ -1,0 +1,49 @@
+plugins {
+    id 'groovy'
+    id 'maven'
+}
+sourceSets {
+    main {
+        groovy {
+            srcDir 'src/main/groovy'
+        }
+        java {
+            srcDir 'src/main/java'
+        }
+
+        resources {
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+dependencies {
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // 不然没有asm
+    implementation "com.android.tools.build:gradle:$android_tools_build_gradle"
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation "org.ow2.asm:asm:7.0"
+    implementation "org.ow2.asm:asm-commons:7.0"
+//    implementation thrid_dependencies.asm // todo 为什么无法获取
+//    implementation thrid_dependencies.asm_commons
+}
+
+repositories {
+    mavenCentral()
+}
+
+// 发布到本地仓库
+group = "com.laputa.plugin.helloworld"
+version = "0.0.6"
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: uri('../repo'))
+//            repository(url:uri('C:/Users/xpl/.m2/repository'))
+        }
+    }
+}

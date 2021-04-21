@@ -1,20 +1,31 @@
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+//apply plugin: 'plugin.hello' // 错误的实例，META-INF创建错误 导致找不到插件
+apply plugin: 'laputa.timetask'
+
+laputa_user{
+    name = "Luban"
+    email = "36363726@qq.com"
+    laputa_address{
+        province = "浙江"
+        city = "宁波"
+        area = "鄞州"
+    }
 }
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "30.0.0"
+    compileSdkVersion android_versions.compileSdkVersion
+    buildToolsVersion android_versions.buildToolsVersion
 
     defaultConfig {
         applicationId "com.laputa.plan"
-        minSdkVersion 23
-        targetSdkVersion 29
+        minSdkVersion android_versions.minSdkVersion
+        targetSdkVersion android_versions.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner android_versions.testInstrumentationRunner
     }
 
     buildTypes {
@@ -32,14 +43,29 @@ android {
     }
 }
 
+//tasks.withType(JavaCompile) {
+//    options.encoding = "UTF-8"
+//}
+
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.2.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    android_dependencies.each {
+        k, v ->
+            println("-$v")
+            implementation v
+    }
+    test_dependencies.each {
+        k, v ->
+            println("-$v")
+            testImplementation v
+    }
+    android_test_dependencies.each {
+        k, v ->
+            println("-$v")
+            androidTestImplementation v
+    }
+
+
 }
+

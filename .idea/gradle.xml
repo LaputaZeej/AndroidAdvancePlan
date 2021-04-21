@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app-arouter" />
             <option value="$PROJECT_DIR$/app-xrouter" />
+            <option value="$PROJECT_DIR$/lib-arouter-service" />
             <option value="$PROJECT_DIR$/lib-common" />
             <option value="$PROJECT_DIR$/lib-xrouter-annotations" />
             <option value="$PROJECT_DIR$/lib-xrouter-annotations-compiler" />
@@ -22,6 +23,8 @@
             <option value="$PROJECT_DIR$/module-arouter-login" />
             <option value="$PROJECT_DIR$/module-xrouter-home" />
             <option value="$PROJECT_DIR$/module-xrouter-login" />
+            <option value="$PROJECT_DIR$/plugin-hello-world" />
+            <option value="$PROJECT_DIR$/plugin-task-time" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

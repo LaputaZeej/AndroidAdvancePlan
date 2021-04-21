@@ -25,17 +25,21 @@ ext {
     ]
 
     android_test_dependencies = [
-            "junit_ext"    : "androidx.test.ext:junit:1.1.1",
-            "espresso"     : "androidx.test.espresso:espresso-core:3.2.0",
+            "junit_ext": "androidx.test.ext:junit:1.1.1",
+            "espresso" : "androidx.test.espresso:espresso-core:3.2.0",
     ]
 
     thrid_dependencies = [
             "javapoet"                        : 'com.squareup:javapoet:1.13.0',
             "auto_service"                    : 'com.google.auto.service:auto-service:1.0-rc4',
             "auto_service_annotationProcessor": 'com.google.auto.service:auto-service:1.0-rc4',
+            "arouter_api"                     : 'com.alibaba:arouter-api:1.5.1',
+            "arouter_compiler"                : 'com.alibaba:arouter-compiler:1.5.1',
+            "ams"        : "org.ow2.asm:asm:7.0",
+            "asm_commons": "org.ow2.asm:asm-commons:7.0"
     ]
 
     thrid_common_dependencies = [
-
+            "gson"       : 'com.google.code.gson:gson:2.8.5',
     ]
 }
