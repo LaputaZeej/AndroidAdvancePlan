@@ -1,3 +1,4 @@
+include ':plugin-logger'
 include ':plugin-task-time'
 include ':plugin-hello-world'
 include ':lib-arouter-service'

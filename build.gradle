@@ -7,8 +7,11 @@ buildscript {
     ext.arouter_register_version = '1.0.2'
 
     repositories {
+
         maven {
-            // 本地仓库
+            url uri('C:/Users/xpl/Documents/repo')
+        }
+        maven {
             url uri('repo')
             // url uri('C:/Users/xpl/.m2/repository')
         }
@@ -31,6 +34,7 @@ buildscript {
 
         classpath 'com.laputa.plugin.helloworld:plugin-hello-world:0.0.6'
         classpath 'com.laputa.plugin.timetask:plugin-task-time:0.0.4'
+        classpath 'com.laputa.plugin:plugin-logger:0.0.2'
     }
 }
 

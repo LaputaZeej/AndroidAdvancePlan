@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/module-xrouter-home" />
             <option value="$PROJECT_DIR$/module-xrouter-login" />
             <option value="$PROJECT_DIR$/plugin-hello-world" />
+            <option value="$PROJECT_DIR$/plugin-logger" />
             <option value="$PROJECT_DIR$/plugin-task-time" />
           </set>
         </option>

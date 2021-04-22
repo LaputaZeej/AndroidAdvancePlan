@@ -1,0 +1,63 @@
+plugins {
+    id 'groovy'
+    id 'maven'
+    id 'kotlin'
+}
+
+sourceSets{
+    main{
+        groovy{
+            srcDir 'src/main/groovy'
+        }
+        java{
+            srcDir 'src/main/java'
+        }
+
+        kotlin {
+            srcDir 'src/main/kotlin'
+        }
+
+        resources{
+            srcDir 'src/main/resources'
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation gradleApi()
+    implementation localGroovy()
+    implementation "com.android.tools.build:gradle:$android_tools_build_gradle"
+    implementation "org.ow2.asm:asm:7.0"
+    implementation "org.ow2.asm:asm-commons:7.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}
+
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+//指定上传的地址和插件id,版本
+//需要上传之后才可以给其他工程当做插件使用
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            pom.groupId = 'com.laputa.plugin'
+            pom.artifactId = 'plugin-logger'
+            pom.version = '0.0.2'
+            repository(url: uri('C:/Users/xpl/Documents/repo'))
+        }
+    }
+}

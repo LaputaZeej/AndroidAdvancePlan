@@ -3,11 +3,16 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'plugin.hello' // 错误的实例，META-INF创建错误 导致找不到插件
 apply plugin: 'laputa.timetask'
+apply plugin: 'laputa.logger'
 
-laputa_user{
+laputa_logger {
+    type = "0"
+}
+
+laputa_user {
     name = "Luban"
     email = "36363726@qq.com"
-    laputa_address{
+    laputa_address {
         province = "浙江"
         city = "宁波"
         area = "鄞州"
