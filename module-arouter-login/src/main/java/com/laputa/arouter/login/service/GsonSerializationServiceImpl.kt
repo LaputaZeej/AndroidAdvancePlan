@@ -1,6 +1,7 @@
 package com.laputa.arouter.login.service
 
 import android.content.Context
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.facade.service.SerializationService
 import com.google.gson.Gson
 import java.lang.reflect.Type
@@ -8,6 +9,7 @@ import java.lang.reflect.Type
 /**
  * Author by xpl, Date on 2021/4/19.
  */
+@Route(path = "/login/gson")
 class GsonSerializationServiceImpl: SerializationService {
     private lateinit var gson: Gson
     override fun init(context: Context?) {

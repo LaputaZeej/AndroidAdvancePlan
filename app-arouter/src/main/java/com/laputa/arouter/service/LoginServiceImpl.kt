@@ -13,17 +13,20 @@ class LoginServiceImpl(override var token: String? = null) : LoginService {
     private var context: Context? = null
     override fun login(username: String, password: String, other: Any): String? {
         if (username == "LuBan" && password == "12345") {
-            token = "[impl02]$username$password$other${System.currentTimeMillis()}"
+            token = "[impl02]$username$password$other${System.currentTimeMillis()}".apply {
+                context?.setToken(this)
+            }
         }
         return token
     }
 
     override fun loginOut(): Boolean {
         token = ""
+        context?.setToken("")
         return true
     }
 
-    override fun isLogin(): Boolean = !token.isNullOrEmpty()
+    override fun isLogin(): Boolean = !context?.getToken().isNullOrEmpty()
 
     override fun init(context: Context?) {
         this.context = context?.applicationContext

@@ -44,8 +44,17 @@ kapt {
     }
 }
 
+//repositories {
+//    flatDir {
+//        dirs 'libs'
+//    }
+//}
+
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
+
+//    implementation(name:'xxx', ext:'aar')
+
     android_dependencies.each {
         k, v ->
             println("-$v")
@@ -64,12 +73,13 @@ dependencies {
     thrid_common_dependencies.each {
         k, v ->
             println("-$v")
-            androidTestImplementation v
+            implementation v
     }
 
-    implementation project(":module-arouter-login")
-    implementation project(":module-arouter-home")
-
+    // 各个模块开发中依赖对方的 service 包
+     implementation project(":module-arouter-login")
+     implementation project(":module-arouter-home")
+    // service包，完成解耦
     implementation project(":lib-arouter-service")
 
     implementation thrid_dependencies.arouter_api

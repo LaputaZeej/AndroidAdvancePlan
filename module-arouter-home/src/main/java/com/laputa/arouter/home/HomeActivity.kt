@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.laputa.arouter.service.LoginService
+import com.laputa.arouter.service.toast
 import kotlinx.android.synthetic.main.activity_home.*
 
 @Route(path = "/home/HomeActivity")
@@ -27,7 +28,7 @@ class HomeActivity : AppCompatActivity() {
     @Autowired(name = "/main/LoginService")
     lateinit var loginServiceImpl02: LoginService
 
-    @Autowired(name = "/login/LoginService")
+    @Autowired(name = "/main/LoginService")
     lateinit var loginServiceImpl03: LoginService
 
     @Autowired(name = "/login/LoginService")
@@ -71,10 +72,15 @@ class HomeActivity : AppCompatActivity() {
         }
 
         btn_04.apply {
-            text = "调用Login服务Impl 04"
+            text = "注销"
             setOnClickListener {
-                val login = loginServiceImpl04?.login(name ?: "", password ?: "", "")
-                showInfo(login ?: "登录失败")
+                val login = loginServiceImpl04?.loginOut()
+                if (login == true) {
+                    toast("退出登录")
+                    finish()
+                } else {
+                    showInfo("退出失败")
+                }
             }
         }
     }

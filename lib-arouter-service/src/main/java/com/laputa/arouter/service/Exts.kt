@@ -12,6 +12,14 @@ fun Context.toast(msg: String) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }
 
+fun Context.getToken(): String {
+    return getSharedPreferences("sp_token", Context.MODE_PRIVATE).getString("token", "") ?: ""
+}
+
+fun Context.setToken(token: String) {
+    getSharedPreferences("sp_token", Context.MODE_PRIVATE).edit().putString("token", token).apply()
+}
+
 fun i(msg: String, tag: String = "Route-Demo") {
     Log.i(tag, msg)
 }

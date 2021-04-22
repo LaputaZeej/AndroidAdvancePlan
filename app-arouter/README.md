@@ -101,7 +101,9 @@ java {
 
 > 1.AutoService会自动在build/classes输入目录下生成文件META-INF/services/javax.annotation.processing.Processor
 >
-> 2.这里还使用到了javapoet
+> 2.SPI , 全称Service Provider Interface，是一种服务发现机制。通过在classPath路径下的MTA-INF/services文件夹查找文件，自动加载文件里所定义的类。
+>
+> 3.这里还使用到了javapoet
 
 3.实现AbstractProcessor
 
@@ -710,4 +712,3 @@ class LoggerAdviceAdapter(
 >
 > 解释器编译器：https://blog.csdn.net/qq_45453185/article/details/103556633
 >
-> ![在这里插入图片描述](https://img-blog.csdnimg.cn/2019121609074215.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQ1NDUzMTg1,size_16,color_FFFFFF,t_70)

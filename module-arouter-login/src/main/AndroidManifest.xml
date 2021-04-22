@@ -3,7 +3,9 @@
     package="com.laputa.arouter.login">
 
     <application>
-        <activity android:name=".LoginActivity"></activity>
+        <activity
+            android:name=".LoginActivity"
+            android:launchMode="singleTop"></activity>
     </application>
 
 </manifest>

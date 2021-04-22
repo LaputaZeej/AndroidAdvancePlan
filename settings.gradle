@@ -9,8 +9,8 @@ include ':lib-xrouter-annotations'
 include ':module-xrouter-login'
 include ':module-xrouter-home'
 include ':app-xrouter'
-include ':module-arouter-home'
-include ':module-arouter-login'
+include ':module-arouter-home' // 个人单独开发一个module，提供一个service-module，然后打包成aar供其他module使用
+include ':module-arouter-login' // ..
 include ':app-arouter'
 include ':app'
 rootProject.name = "AndroidAdvancePlan"

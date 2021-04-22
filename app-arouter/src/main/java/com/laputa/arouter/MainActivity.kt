@@ -2,12 +2,16 @@ package com.laputa.arouter
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
+import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Autowired
-import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.facade.callback.NavigationCallback
 import com.alibaba.android.arouter.launcher.ARouter
 import com.laputa.arouter.service.LoginService
 import com.laputa.arouter.service.ParcelableBean
+import com.laputa.arouter.service.exception.TokenException
+import com.laputa.arouter.service.getToken
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +34,8 @@ class MainActivity : AppCompatActivity() {
         initARouter()
         ARouter.getInstance().inject(this)
         showInfo("[ HomeActivity ]")
-        val msg = "name = $name\npassword = $password\nloginService = $loginService"
+        val msg = "当前token ${getToken()}\n" +
+                "name = $name\npassword = $password\nloginService = $loginService"
         showInfo(msg)
         btn_03.apply {
             text = "注册"
@@ -47,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btn_01.apply {
-            text = "登录"
+            text = "去登录页面"
             setOnClickListener {
                 ARouter.getInstance().build("/login/LoginActivity")
                     .with(
@@ -60,13 +65,52 @@ class MainActivity : AppCompatActivity() {
                     .navigation()
             }
         }
+
         btn_02.apply {
-            text = "Home"
+            text = "去Home页面-弹窗提示"
             setOnClickListener {
                 ARouter.getInstance().build("/home/HomeActivity")
-                    .with(bundleOf("name" to "LuBan", "pwd" to "12345"))
-                    .navigation()
+                    .with(bundleOf("name" to "LuBan", "pwd" to "12345", "auto" to false))
+                    .navigation(this@MainActivity, object : NavigationCallback {
+                        override fun onFound(postcard: Postcard?) {
+                        }
+
+                        override fun onLost(postcard: Postcard?) {
+                        }
+
+                        override fun onArrival(postcard: Postcard?) {
+                        }
+
+                        override fun onInterrupt(postcard: Postcard?) {
+
+                            runOnUiThread {
+                                if (postcard?.tag == TokenException().message) {
+                                    AlertDialog.Builder(this@MainActivity).setTitle("tips")
+                                        .setMessage("请登录")
+                                        .setNegativeButton("返回") { _, _ -> }
+                                        .setPositiveButton("登录") { dialog, _ ->
+                                            dialog.dismiss()
+                                            ARouter.getInstance()
+                                                .build("/login/LoginActivity")
+                                                .navigation()
+                                        }
+                                        .create().show()
+                                }
+                            }
+                        }
+
+                    })
             }
+
+            btn_05.apply {
+                text = "去Home页面-自动拦截"
+                setOnClickListener {
+                    ARouter.getInstance().build("/home/HomeActivity")
+                        .with(bundleOf("name" to "LuBan", "pwd" to "12345"))
+                        .navigation()
+                }
+            }
+
         }
 
     }

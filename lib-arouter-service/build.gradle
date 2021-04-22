@@ -2,6 +2,7 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -33,8 +34,14 @@ android {
     }
 }
 
-dependencies {
+kapt {
+    arguments {
+        arg("AROUTER_MODULE_NAME", project.getName())
+    }
+}
 
+dependencies {
+    //implementation fileTree(dir: "libs", include: ["*.jar", "*.aar"])
     android_dependencies.each {
         k, v ->
             println("-$v")
@@ -51,5 +58,12 @@ dependencies {
             androidTestImplementation v
     }
 
+    thrid_common_dependencies.each {
+        k, v ->
+            println("-$v")
+            implementation v
+    }
+
     implementation thrid_dependencies.arouter_api
+    kapt thrid_dependencies.arouter_compiler
 }
